@@ -21,6 +21,8 @@ defmodule PLWeb.Router do
 
     get "/registration", RegistrationController, :show
     post "/register", RegistrationController, :create
+
+    get "/logs", LogController, :index
   end
 
   # Other scopes may use custom stacks.
