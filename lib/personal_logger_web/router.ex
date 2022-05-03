@@ -19,6 +19,7 @@ defmodule PLWeb.Router do
 
     get "/", PageController, :index
 
+    get "/registration", RegistrationController, :show
     post "/register", RegistrationController, :create
   end
 
