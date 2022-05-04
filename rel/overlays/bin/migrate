@@ -1,5 +1,5 @@
 #!/bin/sh
 cd -P -- "$(dirname -- "$0")"
 echo "Running migrations..."
-personal_logger eval 'PL.Release.migrate()'
+./personal_logger eval 'PL.Release.migrate()'
 echo "Finished running migrations..."
