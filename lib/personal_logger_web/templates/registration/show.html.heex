@@ -2,5 +2,9 @@
 
 <h2>Connect Key</h2>
 <pre>
-<%= connect_key(@conn) %>
+curl --header 'authorization: Bearer <%= connect_key(@conn) %>' \
+    --header 'content-type: application/json' \
+    --request POST \
+    --data '{"log": "This amazing log"}' \
+    <%= Routes.api_log_url(@conn, :create) %>
 </pre>

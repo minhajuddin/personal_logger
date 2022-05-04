@@ -12,6 +12,14 @@ defmodule PLWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug PLWeb.Plugs.AuthenticateUser
+  end
+
+  scope "/api/", PLWeb.API, as: :api do
+    pipe_through :api
+
+    get "/logs", LogController, :index
+    post "/logs", LogController, :create
   end
 
   scope "/", PLWeb do
