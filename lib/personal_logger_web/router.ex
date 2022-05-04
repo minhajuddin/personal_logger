@@ -12,7 +12,6 @@ defmodule PLWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
-    plug CORSPlug
     plug PLWeb.Plugs.AuthenticateUser
   end
 
