@@ -49,6 +49,7 @@ defmodule PL.MixProject do
       {:gettext, "~> 0.18"},
       {:jason, "~> 1.2"},
       {:cors_plug, "~>3.0"},
+      {:timex, "~> 3.7"},
       {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
       {:plug_cowboy, "~> 2.5"}
     ]

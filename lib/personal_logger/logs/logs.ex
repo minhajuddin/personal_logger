@@ -14,6 +14,15 @@ defmodule PL.Logs do
     )
   end
 
+  def list_entries_for_user(user_id) do
+    Repo.all(
+      from e in Entry,
+        where: e.user_id == ^user_id,
+        order_by: [desc: e.inserted_at],
+        select: e
+    )
+  end
+
   def create_entry(body, connect_key) when is_binary(body) and is_binary(connect_key) do
     Repo.insert_all(
       Entry,

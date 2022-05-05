@@ -39,6 +39,8 @@ defmodule PLWeb.Router do
     delete "/session", SessionController, :delete
     get "/registration", RegistrationController, :show
     get "/logs", LogController, :index
+
+    live "/dashboard", DashboardLive
   end
 
   # Other scopes may use custom stacks.
