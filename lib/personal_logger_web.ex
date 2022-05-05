@@ -97,6 +97,7 @@ defmodule PLWeb do
 
       import PLWeb.ErrorHelpers
       import PLWeb.Gettext
+      import PLWeb.UserAuth
       alias PLWeb.Router.Helpers, as: Routes
     end
   end

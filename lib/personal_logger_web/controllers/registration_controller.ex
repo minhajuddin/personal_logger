@@ -15,11 +15,10 @@ defmodule PLWeb.RegistrationController do
         |> put_session(:connect_key, Accounts.connect_key(user))
         |> redirect(to: Routes.registration_path(conn, :show))
 
-      {:error, error} ->
-        Logger.error(message: "registration_error", error: error)
-
+      {:error, changeset} ->
         conn
-        |> send_resp(500, "Error occured")
+        |> put_view(PLWeb.PageView)
+        |> render("index.html", page_title: "Home", user_changeset: changeset)
     end
   end
 end

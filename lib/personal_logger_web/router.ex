@@ -10,9 +10,13 @@ defmodule PLWeb.Router do
     plug :put_secure_browser_headers
   end
 
+  pipeline :authenticated do
+    plug PLWeb.Plugs.AuthenticateUser
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
-    plug PLWeb.Plugs.AuthenticateUser
+    plug PLWeb.Plugs.API.AuthenticateUser
   end
 
   scope "/api/", PLWeb.API, as: :api do
@@ -27,9 +31,13 @@ defmodule PLWeb.Router do
 
     get "/", PageController, :index
 
-    get "/registration", RegistrationController, :show
     post "/register", RegistrationController, :create
+  end
 
+  scope "/", PLWeb do
+    pipe_through [:browser, :authenticated]
+    delete "/session", SessionController, :delete
+    get "/registration", RegistrationController, :show
     get "/logs", LogController, :index
   end
 
