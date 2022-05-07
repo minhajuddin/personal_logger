@@ -6,14 +6,14 @@ defmodule PLWeb.SessionController do
     render(conn, [])
   end
 
-  def create(conn, %{"sign_in" => %{"connect_key" => connect_key}}) do
-    with {:ok, validated_connect_key} <- PLWeb.MagicToken.decode(connect_key),
-         user when not is_nil(user) <- Accounts.find_user_by_connect_key(validated_connect_key) do
+  def create(conn, %{"sign_in" => %{"magic_token" => magic_token}}) do
+    with {:ok, validated_magic_token} <- PLWeb.MagicToken.decode(magic_token),
+         user when not is_nil(user) <- Accounts.find_user_by_magic_token(validated_magic_token) do
       conn
       |> put_flash(:info, "Signed in successfully.")
       |> configure_session(renew: true)
       |> clear_session()
-      |> put_session(:connect_key, Accounts.connect_key(user))
+      |> put_session(:magic_token, Accounts.magic_token(user))
       |> redirect(to: "/")
     else
       _ ->

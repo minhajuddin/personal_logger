@@ -12,7 +12,7 @@ defmodule PLWeb.RegistrationController do
     case Accounts.create_user(email) do
       {:ok, user} ->
         conn
-        |> put_session(:connect_key, Accounts.connect_key(user))
+        |> put_session(:magic_token, Accounts.magic_token(user))
         |> redirect(to: Routes.registration_path(conn, :show))
 
       {:error, changeset} ->

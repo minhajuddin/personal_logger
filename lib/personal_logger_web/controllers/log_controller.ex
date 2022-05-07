@@ -3,11 +3,11 @@ defmodule PLWeb.LogController do
 
   alias PL.Accounts
   require Logger
-  import PLWeb.Plugs.AuthenticateUser, only: [connect_key: 1]
+  import PLWeb.Plugs.AuthenticateUser, only: [magic_token: 1]
 
   def index(conn, params) do
-    {:ok, {user_id, _}} = connect_key(conn) |> PLWeb.MagicToken.decode()
-    entries = Logs.list_entries(connect_key)
+    {:ok, {user_id, _}} = magic_token(conn) |> PLWeb.MagicToken.decode()
+    entries = Logs.list_entries(magic_token)
     render(conn, "index.html")
   end
 end

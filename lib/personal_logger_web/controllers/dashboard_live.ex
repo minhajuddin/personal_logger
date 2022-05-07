@@ -3,8 +3,8 @@ defmodule PLWeb.DashboardLive do
   alias PL.Logs
 
   @impl true
-  def mount(_params, %{"connect_key" => connect_key}, socket) do
-    {:ok, {id, _magic_token}} = PLWeb.MagicToken.decode(connect_key)
+  def mount(_params, %{"magic_token" => magic_token}, socket) do
+    {:ok, {id, _magic_token}} = PLWeb.MagicToken.decode(magic_token)
 
     if connected?(socket) do
       schedule_tick()

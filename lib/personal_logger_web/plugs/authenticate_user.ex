@@ -3,17 +3,17 @@ defmodule PLWeb.Plugs.API.AuthenticateUser do
   import Plug.Conn
 
   # TODO: This should really authenticate the user and put the user's struct
-  # in the conn.private and not just decode the connect_key
+  # in the conn.private and not just decode the magic_token
 
   def init(opts), do: opts
 
   def call(conn, _opts) do
-    ["Bearer " <> connect_key] = get_req_header(conn, "authorization")
-    put_private(conn, :connect_key, connect_key)
+    ["Bearer " <> magic_token] = get_req_header(conn, "authorization")
+    put_private(conn, :magic_token, magic_token)
   end
 
-  def connect_key(conn) do
-    conn.private[:connect_key]
+  def magic_token(conn) do
+    conn.private[:magic_token]
   end
 end
 
@@ -23,17 +23,17 @@ defmodule PLWeb.Plugs.AuthenticateUser do
   import Phoenix.Controller
 
   # TODO: This should really authenticate the user and put the user's struct
-  # in the conn.private and not just decode the connect_key
+  # in the conn.private and not just decode the magic_token
 
   def init(opts), do: opts
 
   def call(conn, _opts) do
-    with {:connect_key, connect_key} when not is_nil(connect_key) <-
-           {:connect_key, get_session(conn, :connect_key)},
-         {:decode, {:ok, {_id, _api_key}}} <- {:decode, PLWeb.MagicToken.decode(connect_key)} do
+    with {:magic_token, magic_token} when not is_nil(magic_token) <-
+           {:magic_token, get_session(conn, :magic_token)},
+         {:decode, {:ok, {_id, _api_key}}} <- {:decode, PLWeb.MagicToken.decode(magic_token)} do
       conn
     else
-      {:connect_key, _} ->
+      {:magic_token, _} ->
         conn
         |> halt
         |> put_flash(:error, "You must be logged in to access this page.")
@@ -49,7 +49,7 @@ defmodule PLWeb.Plugs.AuthenticateUser do
     end
   end
 
-  def connect_key(conn) do
-    conn.private[:connect_key]
+  def magic_token(conn) do
+    conn.private[:magic_token]
   end
 end

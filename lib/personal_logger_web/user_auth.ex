@@ -5,6 +5,6 @@ defmodule PLWeb.UserAuth do
   import Plug.Conn
 
   def user_signed_in?(conn) do
-    !!get_session(conn, :connect_key)
+    !!get_session(conn, :magic_token)
   end
 end

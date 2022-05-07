@@ -3,11 +3,11 @@ defmodule PLWeb.API.LogController do
 
   alias PL.Logs
   require Logger
-  import PLWeb.Plugs.AuthenticateUser, only: [connect_key: 1]
+  import PLWeb.Plugs.AuthenticateUser, only: [magic_token: 1]
 
   def index(conn, _params) do
-    connect_key = connect_key(conn)
-    entries = Logs.list_entries(connect_key)
+    magic_token = magic_token(conn)
+    entries = Logs.list_entries(magic_token)
 
     send_resp(
       conn,
@@ -23,8 +23,8 @@ defmodule PLWeb.API.LogController do
   end
 
   def create(conn, params) do
-    connect_key = connect_key(conn)
-    Logs.create_entry(params["log"], connect_key)
+    magic_token = magic_token(conn)
+    Logs.create_entry(params["log"], magic_token)
     send_resp(conn, :created, "{}")
   end
 end

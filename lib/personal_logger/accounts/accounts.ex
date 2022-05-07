@@ -6,7 +6,7 @@ defmodule PL.Accounts do
     User.changeset(%User{}, %{})
   end
 
-  def find_user_by_connect_key({id, api_key}) do
+  def find_user_by_magic_token({id, api_key}) do
     Repo.get_by(User, id: id, api_key: api_key)
   end
 
@@ -16,7 +16,7 @@ defmodule PL.Accounts do
     |> Repo.insert()
   end
 
-  def connect_key(user = %User{id: id, api_key: api_key})
+  def magic_token(user = %User{id: id, api_key: api_key})
       when not is_nil(id) and not is_nil(api_key) do
     "cx_" <> Base.url_encode64(Ecto.UUID.dump!(id) <> Ecto.UUID.dump!(api_key))
   end

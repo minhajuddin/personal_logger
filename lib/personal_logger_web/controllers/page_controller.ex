@@ -4,9 +4,9 @@ defmodule PLWeb.PageController do
   alias PL.Accounts
 
   def index(conn, _params) do
-    connect_key = get_session(conn, :connect_key)
+    magic_token = get_session(conn, :magic_token)
 
-    if connect_key do
+    if magic_token do
       redirect(conn, to: Routes.log_path(conn, :index))
     else
       render(conn, "index.html", page_title: "Home", user_changeset: Accounts.new_user_changeset())

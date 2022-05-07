@@ -2,7 +2,7 @@
 
 <h2>Connect Key</h2>
 <pre>
-curl --header 'authorization: Bearer <%= connect_key(@conn) %>' \
+curl --header 'authorization: Bearer <%= magic_token(@conn) %>' \
     --header 'content-type: application/json' \
     --request POST \
     --data '{"log": "This amazing log"}' \
