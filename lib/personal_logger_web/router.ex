@@ -32,6 +32,8 @@ defmodule PLWeb.Router do
     get "/", PageController, :index
 
     post "/register", RegistrationController, :create
+    get "/sign-in", SessionController, :new
+    post "/session", SessionController, :create
   end
 
   scope "/", PLWeb do

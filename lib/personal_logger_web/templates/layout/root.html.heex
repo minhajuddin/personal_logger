@@ -17,9 +17,11 @@
             <%= if user_signed_in?(@conn) do %>
             <li><%= link "Dashboard", to: Routes.live_dashboard_path(@conn, :home) %></li>
             <li><%= link "API Info", to: Routes.registration_path(@conn, :show) %></li>
-            <li><%= link "Log out", to: Routes.session_path(@conn, :delete), method: :delete %></li>
+            <li><%= link "Sign out", to: Routes.session_path(@conn, :delete), method: :delete %></li>
             <% else %>
-            <!-- <li><a href="/dashboard">Dashboard</a></li> -->
+            <li>
+              <%= link "Sign in", to: Routes.session_path(@conn, :new) %>
+            </li>
             <% end %>
             <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
               <li><%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home) %></li>

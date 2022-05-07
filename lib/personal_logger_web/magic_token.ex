@@ -1,4 +1,7 @@
 defmodule PLWeb.MagicToken do
+  def encode(%User{} = user) do
+  end
+
   # TODO: Use this everywhere
   def decode("cx_" <> magic_token) do
     with {:base64, {:ok, <<id::binary-size(16), api_key::binary-size(16)>>}} <-

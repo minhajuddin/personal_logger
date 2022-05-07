@@ -3,23 +3,12 @@ defmodule PLWeb.LogController do
 
   alias PL.Accounts
   require Logger
+  import PLWeb.Plugs.AuthenticateUser, only: [connect_key: 1]
 
   def index(conn, params) do
+    {:ok, {user_id, _}} = connect_key(conn) |> PLWeb.MagicToken.decode
+    entries = Logs.list_entries(connect_key)
     render(conn, "index.html")
   end
 
-  def create(conn, %{"user" => %{"email" => email}}) do
-    case Accounts.create_user(email) do
-      {:ok, user} ->
-        conn
-        |> put_session(:connect_key, Accounts.connect_key(user))
-        |> redirect(to: Routes.registration_path(conn, :show))
-
-      {:error, error} ->
-        Logger.error(message: "registration_error", error: error)
-
-        conn
-        |> send_resp(500, "Error occured")
-    end
-  end
 end
