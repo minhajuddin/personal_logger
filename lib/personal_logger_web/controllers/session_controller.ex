@@ -3,7 +3,7 @@ defmodule PLWeb.SessionController do
   alias PL.Accounts
 
   def new(conn, _params) do
-    render conn, []
+    render(conn, [])
   end
 
   def create(conn, %{"sign_in" => %{"connect_key" => connect_key}}) do

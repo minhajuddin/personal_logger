@@ -9,7 +9,6 @@ defmodule PL.Accounts do
   def find_user_by_connect_key({id, api_key}) do
     Repo.get_by(User, id: id, api_key: api_key)
   end
-    
 
   def create_user(email) do
     User.changeset(%User{}, %{email: email})
